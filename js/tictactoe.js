@@ -33,17 +33,16 @@ if(!selectedSquares.some(element => element.includes(squareNumber))) {
     }
 
 
-}
-}
-
-//This function plays the placement sound.
-audio('./media/place.mp3');
-//This condition checks to see if it is computers turn.
-if(activePlayer ==="o") {
-    //this function disables clicking for computer choice.
-    disableClick();
-    //this function waits 1 second before the computer places images and enables click.
-    setTimeout(function (){computersTurn(); }, 1000)
+    //This function plays the placement sound.
+    audio("./media/place.mp3");
+    //This condition checks to see if it is computers turn.
+    if(activePlayer ==="o") {
+        //this function disables clicking for computer choice.
+        disableClick();
+        //this function waits 1 second before the computer places images and enables click.
+        setTimeout(function (){computersTurn(); }, 1000)
+    } 
+    return true;
 }
 //Returning true is needed for our computersturn() function to work
 
@@ -66,6 +65,7 @@ function computersTurn() {
             };
         }
     }
+}
 
 
 //this function parses the selecetedsquares array to search for win conditions
@@ -141,7 +141,7 @@ function disableClick() {
 //this function takes a string parameter of the path you set earlier for placment sound
 function audio(audioURL) {
     //We create a new audio object and we pass the path as a parameter
-    let audio = new audio (audioURL);
+    let audio = new Audio(audioURL);
     //play method plays our audio sound
     audio.play();
 }
@@ -161,7 +161,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
     y2 = coordY2,
     x = x1,
     y = y1;
-}
+
 
 //this function interacts with the canvas
 function animateLineDrawing() {
@@ -178,25 +178,26 @@ function animateLineDrawing() {
     //this method sets the width of our line
     c.lineWidth = 10;
     //this method the color of our line
-    c.strokeStyle = 'rgba(70, 255, 33, .8)';
+    c.strokeStyle = "rgba(70, 255, 33, .8)";
     //this method draws everything we laid out above
     c.stroke();
     //this condition checks if we've reached the endpoint
-    if (x1 <= x2 && y1 <=y2) {
+    if (x1 <= x2 && y1 <= y2) {
         //this condition adds to tje prev end point
-        if (x < x2) { x +=10; } 
+        if (x < x2) { x += 10; } 
         //this adds ten to y endpoint
         if (y < y2) { y += 10; }
         //this cond cancels our animation loop if weve reached the endpoints
-        if (x>= x2 && y >= y2) {cancelAnimationFrame(animationLoop); }
+        if (x >= x2 && y >= y2) { cancelAnimationFrame(animationLoop); }
     }
     //this condition is similiar to above
     if (x1 <= x2 && y1 >= y2) {
         if (x < x2) { x += 10; }
-        if (y > y2) {y -= 10; }
+        if (y > y2) { y -= 10; }
         if (x >= x2 && y <= y2) { cancelAnimationFrame(animationLoop); }
     }
 }
+
 //this function clears our canvas after our win line is drawn
 function clear() {
     //this line starts our animation loop.
@@ -205,6 +206,7 @@ function clear() {
     c.clearRect(0, 0, 608, 608);
     //this line stops our animation loop
     cancelAnimationFrame(animationLoop);
+}
 
 //this line disallows clicking while the win sound is playing
 disableClick();
@@ -213,7 +215,7 @@ audio("./media/winGame.mp3") ;
 //this line calls our main animation loop
 animateLineDrawing();
 //this line waits 1 second then, clears canvas resets and allows clicking
-setTimeout(function() {clear(); resetGame(); }, 1000);
+setTimeout(function () { clear(); resetGame(); }, 1000);
 }
 
 //loop
@@ -223,8 +225,8 @@ function resetGame() {
     for (let i = 0; i < 9; i++) {
         let square = document.getElementById(String(i))
         //this removes our elements bg image
-        squarw.style.backgroundImage =""
+        square.style.backgroundImage=""
     }
     //this resets our array so it is empty and we can start over
     selectedSquares=[];
-}
+    }
